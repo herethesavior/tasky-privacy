@@ -45,23 +45,49 @@
     }
 
     .theme-btn {
-      background: none;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 6px 12px;
-      font-size: 13px;
-      font-weight: 500;
-      color: #64748b;
+      background: #f1f5f9;
+      border: none;
+      border-radius: 999px;
+      padding: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      width: 56px;
+      height: 28px;
+      position: relative;
+      transition: background 0.25s;
+      flex-shrink: 0;
     }
 
-    .theme-btn:hover { background: #f1f5f9; }
+    .theme-btn:focus-visible { outline: 2px solid #0ea5e9; outline-offset: 2px; }
 
-    .theme-btn .icon { font-size: 15px; line-height: 1; }
+    .theme-btn .track-icons {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 6px;
+      font-size: 12px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .theme-btn .knob {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      line-height: 1;
+    }
 
     h1 {
       font-size: 28px;
@@ -163,8 +189,8 @@
       body:not([data-theme="light"]) .permission-block { background: #162032; border-color: #2d3f55; }
       body:not([data-theme="light"]) .permission-block strong { color: #f1f5f9; }
       body:not([data-theme="light"]) hr { border-top-color: #2d3f55; }
-      body:not([data-theme="light"]) .theme-btn { border-color: #2d3f55; color: #94a3b8; }
-      body:not([data-theme="light"]) .theme-btn:hover { background: #162032; }
+      body:not([data-theme="light"]) .theme-btn { background: #334155; }
+      body:not([data-theme="light"]) .theme-btn .knob { background: #1e293b; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
     }
 
     /* ── explicit dark (JS override) ── */
@@ -179,17 +205,17 @@
     body[data-theme="dark"] .permission-block { background: #162032; border-color: #2d3f55; }
     body[data-theme="dark"] .permission-block strong { color: #f1f5f9; }
     body[data-theme="dark"] hr { border-top-color: #2d3f55; }
-    body[data-theme="dark"] .theme-btn { border-color: #2d3f55; color: #94a3b8; }
-    body[data-theme="dark"] .theme-btn:hover { background: #162032; }
+    body[data-theme="dark"] .theme-btn { background: #334155; }
+    body[data-theme="dark"] .theme-btn .knob { background: #1e293b; box-shadow: 0 1px 4px rgba(0,0,0,0.4); }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="top-bar">
       <div class="badge">Tasky for Android</div>
-      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
-        <span class="icon" id="themeIcon">☀️</span>
-        <span id="themeLabel">Light</span>
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle dark mode">
+        <span class="track-icons"><span>☀️</span><span>🌙</span></span>
+        <span class="knob" id="themeKnob"></span>
       </button>
     </div>
 
@@ -290,9 +316,7 @@
   </div>
 
   <script>
-    const btn = document.getElementById('themeBtn');
-    const icon = document.getElementById('themeIcon');
-    const label = document.getElementById('themeLabel');
+    const knob = document.getElementById('themeKnob');
 
     function isDark() {
       const t = document.body.dataset.theme;
@@ -301,13 +325,8 @@
     }
 
     function updateBtn() {
-      if (isDark()) {
-        icon.textContent = '☀️';
-        label.textContent = 'Light';
-      } else {
-        icon.textContent = '🌙';
-        label.textContent = 'Dark';
-      }
+      // slide knob right (dark) or left (light)
+      knob.style.transform = isDark() ? 'translateX(28px)' : 'translateX(0)';
     }
 
     function toggleTheme() {
