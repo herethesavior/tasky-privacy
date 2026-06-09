@@ -13,6 +13,7 @@
       color: #1e293b;
       line-height: 1.7;
       padding: 40px 16px 80px;
+      transition: background 0.2s, color 0.2s;
     }
 
     .container {
@@ -22,6 +23,14 @@
       border-radius: 16px;
       padding: 48px 48px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 24px rgba(0,0,0,0.04);
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
     }
 
     .badge {
@@ -32,15 +41,34 @@
       font-weight: 600;
       padding: 4px 12px;
       border-radius: 999px;
-      margin-bottom: 16px;
       letter-spacing: 0.3px;
     }
+
+    .theme-btn {
+      background: none;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .theme-btn:hover { background: #f1f5f9; }
+
+    .theme-btn .icon { font-size: 15px; line-height: 1; }
 
     h1 {
       font-size: 28px;
       font-weight: 700;
       color: #0f172a;
       margin-bottom: 6px;
+      transition: color 0.2s;
     }
 
     .meta {
@@ -55,6 +83,7 @@
       color: #0f172a;
       margin-top: 40px;
       margin-bottom: 12px;
+      transition: color 0.2s;
     }
 
     p {
@@ -83,6 +112,7 @@
       font-size: 15px;
       color: #0369a1;
       font-weight: 500;
+      transition: background 0.2s, color 0.2s;
     }
 
     .permission-block {
@@ -91,6 +121,7 @@
       border-radius: 10px;
       padding: 16px 20px;
       margin-bottom: 12px;
+      transition: background 0.2s, border-color 0.2s;
     }
 
     .permission-block strong {
@@ -99,12 +130,10 @@
       font-weight: 700;
       color: #0f172a;
       margin-bottom: 4px;
+      transition: color 0.2s;
     }
 
-    .permission-block p {
-      margin-bottom: 0;
-      font-size: 14px;
-    }
+    .permission-block p { margin-bottom: 0; font-size: 14px; }
 
     a { color: #0ea5e9; text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -113,6 +142,7 @@
       border: none;
       border-top: 1px solid #e2e8f0;
       margin: 40px 0;
+      transition: border-color 0.2s;
     }
 
     @media (max-width: 600px) {
@@ -120,23 +150,49 @@
       h1 { font-size: 22px; }
     }
 
+    /* ── system dark mode (default, before JS runs) ── */
     @media (prefers-color-scheme: dark) {
-      body { background: #0f172a; color: #cbd5e1; }
-      .container { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 24px rgba(0,0,0,0.2); }
-      h1, h2 { color: #f1f5f9; }
-      .meta { color: #64748b; }
-      p, ul li { color: #94a3b8; }
-      .highlight { background: #0c2d3f; border-left-color: #0ea5e9; color: #38bdf8; }
-      .permission-block { background: #162032; border-color: #2d3f55; }
-      .permission-block strong { color: #f1f5f9; }
-      hr { border-top-color: #2d3f55; }
-      footer, p[style] { color: #475569 !important; }
+      body:not([data-theme="light"]) { background: #0f172a; color: #cbd5e1; }
+      body:not([data-theme="light"]) .container { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 24px rgba(0,0,0,0.2); }
+      body:not([data-theme="light"]) h1,
+      body:not([data-theme="light"]) h2 { color: #f1f5f9; }
+      body:not([data-theme="light"]) .meta { color: #64748b; }
+      body:not([data-theme="light"]) p,
+      body:not([data-theme="light"]) ul li { color: #94a3b8; }
+      body:not([data-theme="light"]) .highlight { background: #0c2d3f; border-left-color: #0ea5e9; color: #38bdf8; }
+      body:not([data-theme="light"]) .permission-block { background: #162032; border-color: #2d3f55; }
+      body:not([data-theme="light"]) .permission-block strong { color: #f1f5f9; }
+      body:not([data-theme="light"]) hr { border-top-color: #2d3f55; }
+      body:not([data-theme="light"]) .theme-btn { border-color: #2d3f55; color: #94a3b8; }
+      body:not([data-theme="light"]) .theme-btn:hover { background: #162032; }
     }
+
+    /* ── explicit dark (JS override) ── */
+    body[data-theme="dark"] { background: #0f172a; color: #cbd5e1; }
+    body[data-theme="dark"] .container { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 24px rgba(0,0,0,0.2); }
+    body[data-theme="dark"] h1,
+    body[data-theme="dark"] h2 { color: #f1f5f9; }
+    body[data-theme="dark"] .meta { color: #64748b; }
+    body[data-theme="dark"] p,
+    body[data-theme="dark"] ul li { color: #94a3b8; }
+    body[data-theme="dark"] .highlight { background: #0c2d3f; border-left-color: #0ea5e9; color: #38bdf8; }
+    body[data-theme="dark"] .permission-block { background: #162032; border-color: #2d3f55; }
+    body[data-theme="dark"] .permission-block strong { color: #f1f5f9; }
+    body[data-theme="dark"] hr { border-top-color: #2d3f55; }
+    body[data-theme="dark"] .theme-btn { border-color: #2d3f55; color: #94a3b8; }
+    body[data-theme="dark"] .theme-btn:hover { background: #162032; }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="badge">Tasky for Android</div>
+    <div class="top-bar">
+      <div class="badge">Tasky for Android</div>
+      <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">
+        <span class="icon" id="themeIcon">☀️</span>
+        <span id="themeLabel">Light</span>
+      </button>
+    </div>
+
     <h1>Privacy Policy</h1>
     <p class="meta">Last updated: June 9, 2026</p>
 
@@ -232,5 +288,34 @@
       &copy; 2026 Tasky. All rights reserved.
     </p>
   </div>
+
+  <script>
+    const btn = document.getElementById('themeBtn');
+    const icon = document.getElementById('themeIcon');
+    const label = document.getElementById('themeLabel');
+
+    function isDark() {
+      const t = document.body.dataset.theme;
+      if (t) return t === 'dark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function updateBtn() {
+      if (isDark()) {
+        icon.textContent = '☀️';
+        label.textContent = 'Light';
+      } else {
+        icon.textContent = '🌙';
+        label.textContent = 'Dark';
+      }
+    }
+
+    function toggleTheme() {
+      document.body.dataset.theme = isDark() ? 'light' : 'dark';
+      updateBtn();
+    }
+
+    updateBtn();
+  </script>
 </body>
 </html>
