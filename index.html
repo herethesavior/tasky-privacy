@@ -119,6 +119,19 @@
       .container { padding: 28px 20px; }
       h1 { font-size: 22px; }
     }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #0f172a; color: #cbd5e1; }
+      .container { background: #1e293b; box-shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 24px rgba(0,0,0,0.2); }
+      h1, h2 { color: #f1f5f9; }
+      .meta { color: #64748b; }
+      p, ul li { color: #94a3b8; }
+      .highlight { background: #0c2d3f; border-left-color: #0ea5e9; color: #38bdf8; }
+      .permission-block { background: #162032; border-color: #2d3f55; }
+      .permission-block strong { color: #f1f5f9; }
+      hr { border-top-color: #2d3f55; }
+      footer, p[style] { color: #475569 !important; }
+    }
   </style>
 </head>
 <body>
